@@ -1,0 +1,108 @@
+\documentclass{beamer}
+\usetheme{Antibes}
+
+\usepackage[makeroom]{cancel}
+
+\title[FastWN]{Fast Winding Numbers for Soups and Clouds}
+\author{Gavin Braill (University of Toronto), Neil G.Dickson, Ryan Schmidt, David I.W. Levin and Alec Jacobson\\TOG August 2018}
+\date{\tiny\today}
+
+% control sequence whose name is non-letter
+% doesn't require either spaces or braces aftet it
+\def\*#1{\mathbf{#1}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\begin{document}
+\frame{\titlepage}
+
+% \begin{frame}
+%   \frametitle{Outline}
+%   \tableofcontents
+% \end{frame}
+
+\frame{{Determining whether a point is inside or outside}
+  \includegraphics<1>[width=0.7\textwidth]{img/use}
+  \begin{itemize}
+    \item<2> Challenges
+    \begin{itemize}
+      \item<2> Open boundary
+      \item<2> Degenerate geometry
+      \item<2> Self-intersections
+      \item<2> Non-manifold
+      \item<2> Fast Enough!
+    \end{itemize}
+  \end{itemize}
+  
+}
+
+\frame{{What is Winding Number?}
+  \begin{itemize}
+    \item<1> For 2D curve under polar coordinate, $\frac{\theta(1)-\theta(0)}{2\pi}$
+    \item<3> For suface, $w_S(\*q)=\frac{1}{4\pi}\int_S d\Omega(\*q)$, $d\Omega$ is solid angle.
+  \end{itemize}
+  \includegraphics<1>[width=0.6\textwidth]{img/wn}
+  \includegraphics<2>[width=\textwidth]{img/harm}
+}
+
+\frame{{For Point Cloud}
+  \begin{itemize}
+    \item $w_S(\*q) \approx \sum_{i=1}^{m}a_i\frac{(\*p_i-\*q)\cdot \*n_i}{4\pi||\*p_i-\*q||^3}$
+    \item $a_i$ is the geodesic Voronoi area of the point on the surface.
+    %\item $a_i$ is approximated by projection of k-nearest neighbors onto the best-fit plane. Their method are not sensitive to area accuracy.
+  \end{itemize}
+  \includegraphics[width=0.7\textwidth]<1>{img/ts}
+  %\includegraphics[width=\textwidth]<2>{img/sen}
+}
+
+\frame{{Fast Approximation}
+  \begin{itemize}
+    \item<1> Naive method: n query, m points, complexity: $\mathcal{O}(nm)$
+    \item<2> Approximation: use octree or AABB tree for partion the space
+  \end{itemize}
+  \includegraphics<1>[width=\textwidth]{img/appr}
+  \includegraphics<2>[width=\textwidth]{img/far}
+}
+
+\frame{{Taylor Expansion}
+  \begin{itemize}
+    \item $\nabla G(\*q,\tilde{\*p}) = \frac{(\tilde{\*p}-\*q)}{4\pi||\tilde{\*p}-\*q||^3}$
+    \item $\tilde{\*p} = \sum a_i \*p_i$
+    \item<1> For point cloud
+    \item<2> For triangle soups
+\end{itemize}
+  \includegraphics<1>[width=0.8\textwidth]{img/taylor}
+  \includegraphics<2>[width=0.8\textwidth]{img/taylor2}
+}
+
+\frame{{Experiments and Application}
+  \begin{itemize}
+    \item<1> Test on \textit{Thingi10k}
+    \item<2> Test on different $\beta$.
+  \end{itemize}
+  \includegraphics<1>[width=\textwidth]{img/thingi}
+  \includegraphics<2>[width=0.5\textwidth]{img/beta}
+}
+
+\frame{{Application}
+  \begin{itemize}
+    \item<1> Boolean operation.
+    \item<2> Extract $\frac{1}{2}$ iso-value surface
+    \item<3> Directly output \textit{toolpath} for 3D print
+    \item<4> Voxelization for skining weight
+  \end{itemize}
+  \includegraphics<1>[width=0.5\textwidth]{img/bool}
+  \includegraphics<2>[width=0.6\textwidth]{img/iso}
+  \includegraphics<3>[width=\textwidth]{img/print}
+  \includegraphics<4>[width=0.8\textwidth]{img/maya}
+}
+
+% \frame{{Related Works}
+%   \begin{itemize}
+%     \item Fast Multipole Method
+%     \item Poisson Surface Reconstruction
+%     \item Alec Jacobson \textit{Robust Inside-Outside Segmentation using Generalized Winding Numbers} [2013]
+%   \end{itemize}
+% }
+
+\end{document}
+
